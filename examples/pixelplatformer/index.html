@@ -342,12 +342,14 @@
 
             setObstaclesParams();
 
-            character.collision(obstacles);
-            character.collision(grounds);
-            character.fall(FALL_MULTIPLIER);
-            character.on('move', characterOnMove);
-            character.on('fall', characterOnFall);
-            character.on('collision', characterOnCollision);
+            elpy.on('load', () => {
+                character.collision(obstacles);
+                character.collision(grounds);
+                character.fall(FALL_MULTIPLIER);
+                character.on('move', characterOnMove);
+                character.on('fall', characterOnFall);
+                character.on('collision', characterOnCollision);
+            });
 
             elpy.tick(() => {
                 if (character.options.custom.slidingDelta > 0) {
@@ -425,8 +427,6 @@
                         break;
                 }
             });
-
-            elpy.load();
 
             function spawnBackgroundObjects() {
                 for(let i = 0; i < map.objects.length; i++) {
