@@ -427,6 +427,11 @@
                         break;
                 }
             });
+            //
+            if (window.screen.width < 768) {
+                elpy.load();
+            }
+            //
 
             function spawnBackgroundObjects() {
                 for(let i = 0; i < map.objects.length; i++) {
