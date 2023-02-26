@@ -53,19 +53,19 @@
             } 
         });
 
-        async function fullscreen() {
+        function fullscreen() {
             if(document.documentElement.requestFullscreen) {
-                await document.body.requestFullscreen();
+                document.body.requestFullscreen();
             } else if(document.documentElement.webkitRequestFullScreen) {
-                await ocument.body.webkitRequestFullScreen();
+                ocument.body.webkitRequestFullScreen();
             }
         }
 
-        async function exitFullscreen() {
+        function exitFullscreen() {
             if(document.exitFullscreen) {
-                await document.exitFullscreen();
+                document.exitFullscreen();
             } else if(document.webkitExitFullscreen) {
-                await document.webkitExitFullscreen();
+                document.webkitExitFullscreen();
             }
         }
 
