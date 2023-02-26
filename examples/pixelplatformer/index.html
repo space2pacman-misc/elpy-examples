@@ -35,17 +35,33 @@
 
         fullScreenButton.addEventListener('click', async () => {
             if (!fullScreenMode) {
-                await document.body.requestFullscreen();
+                await fullscreen();
                 await screen.orientation.lock("landscape-primary");
 
                 fullScreenMode = true;
             } else {
-                await document.exitFullscreen()
+                await exitFullscreen();
                 await screen.orientation.unlock();
                 
                 fullScreenMode = false;
             } 
         });
+
+        async function fullscreen() {
+            if(document.documentElement.requestFullscreen) {
+                await document.body.requestFullscreen();
+            } else if(document.documentElement.webkitRequestFullScreen) {
+                await ocument.body.webkitRequestFullScreen();
+            }
+        }
+
+        async function exitFullscreen() {
+            if(document.exitFullscreen) {
+                await document.exitFullscreen();
+            } else if(document.webkitExitFullscreen) {
+                await document.webkitExitFullscreen();
+            }
+        }
 
         function loadGame() {
             const options = {
