@@ -9,6 +9,7 @@
     <title>Pixel platformer</title>
 </head>
 <body>
+    <div class="fullscreen js-fullscreen"></div>
     <div class="play js-play">
         <div class="play__game-title">
             <div>Pixel<br>platformer</div>
@@ -28,6 +29,23 @@
     <canvas id="field"></canvas>
     <script src="../../dist/elpy.min.js"></script>
     <script>
+        let fullScreenMode = false;
+        const fullScreenButton = document.querySelector('.js-fullscreen');
+
+        fullScreenButton.addEventListener('click', async () => {
+            if (!fullScreenMode) {
+                await document.body.requestFullscreen();
+                await screen.orientation.lock("landscape-primary");
+
+                fullScreenMode = true;
+            } else {
+                await document.exitFullscreen()
+                await screen.orientation.unlock();
+                
+                fullScreenMode = false;
+            } 
+        });
+
         function loadGame() {
             const options = {
                 engine: {
@@ -319,7 +337,7 @@
             const grounds = [];
             const obstacles = [];
             const MAX_MAP_LENGTH = (map.objects[0].length - 1) * UNIT;
-            const elpy = new Elpy('#field', window.screen.width < 768 ? window.screen.width : 500, UNIT * 15, options.engine);
+            const elpy = new Elpy('#field', window.outerWidth, UNIT * 15, options.engine);
             const background = elpy.create('background', -10000, -10000, 20000, 20000, options.background);            
             const flag = createFlag();
             let isFlagLowered = false;
@@ -428,9 +446,9 @@
                 }
             });
             //
-            if (window.screen.width < 768) {
+            //if (window.screen.width < 768) {
                 elpy.load();
-            }
+            //}
             //
 
             function spawnBackgroundObjects() {
@@ -1139,22 +1157,28 @@
             }
         }
 
-        init();
+        // init();
 
-        function init() {
-            if (window.screen.width <= 768) {
-                if (window.screen.width > window.screen.height) {
-                    location.reload(true);
+        // function init() {
+        //     if (window.screen.width <= 768) {
+        //         if (window.screen.width > window.screen.height) {
+        //             location.reload(true);
 
-                    return;
-                }
+        //             return;
+        //         }
 
-                loadMobileGame();
-            } else {
-                loadGame();
-            }
-        }
+        //         loadMobileGame();
+        //     } else {
+        //         //loadGame();
+        //     }
+        // }
 
+        loadMobileGame();
+
+        // window.addEventListener('orientationchange', () => {
+        //     location.reload(true);
+        // });
+        
         function loadMobileGame() {
             const field = document.querySelector('#field');
             const controls = document.querySelector('.js-controls');
@@ -1193,28 +1217,15 @@
                 document.dispatchEvent(new KeyboardEvent('keyup',{'code':'ArrowUp'}));
             });
 
-            window.addEventListener('load', () => {
-                const desiredWidth = Math.max(window.screen.width, window.screen.height);
+            const desiredWidth = Math.max(window.screen.width, window.screen.height);
 
-                playButton.addEventListener('click', () => {
-                    play.style.display = 'none';
-                    
-                    document.body.requestFullscreen();
-                    window.addEventListener('fullscreenchange', () => {
-                        screen.orientation.lock("landscape-primary");
+            playButton.addEventListener('click', () => {
+                fullScreenButton.style.display = 'none';
+                play.style.display = 'none';
+                controls.style.display = 'flex';
+                field.style.display = 'block';
 
-                        const id = setInterval(() => {
-                            if (screen.width === desiredWidth) {
-                                play.style.display = 'none';
-                                controls.style.display = 'flex';
-                                field.style.display = 'block';
-                            
-                                clearInterval(id);
-                                loadGame();
-                            }
-                        });
-                    });
-                });
+                loadGame();
             });
         }
     </script>

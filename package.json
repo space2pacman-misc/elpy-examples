@@ -1,0 +1,26 @@
+{
+  "name": "elpy-examples",
+  "version": "1.0.0",
+  "description": "Examples of games for the [Elpy.js](https://github.com/space2pacman/elpy/) engine",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "serve": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/space2pacman-misc/elpy-examples.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/space2pacman-misc/elpy-examples/issues"
+  },
+  "homepage": "https://github.com/space2pacman-misc/elpy-examples#readme",
+  "devDependencies": {
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  }
+}

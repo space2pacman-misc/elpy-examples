@@ -132,6 +132,16 @@
     background-image: url('./../images/controls/b.png');
 }
 
+.fullscreen {
+    background-image: url('./../images/controls/fullscreen.png');
+    width: 48px;
+    height: 48px;
+    z-index: 1;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
 @media (max-width: 768px) {
     body {
         overflow: hidden;
@@ -140,10 +150,40 @@
     #field {
         border: none;
         display: none;
-        height: 100vh;
+        /* height: 100vh; */
     }
 
     .play {
         display: flex;
+    }
+
+    @media (orientation: portrait) {
+        .controls__arrows {
+            align-items: end;
+        }
+    
+        .controls__buttons {
+            flex-direction: column;
+        }
+    }
+
+    @media (orientation: landscape) {
+        /* .play {
+            flex-direction: row;
+        } */
+
+        .play__game-title {
+            position: initial;
+        }
+
+        .play__button {
+            position: initial;
+        }
+
+        #field {
+            position: absolute;
+            z-index: -1;
+            bottom: 0;
+        }
     }
 }
