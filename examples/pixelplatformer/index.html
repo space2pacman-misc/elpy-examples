@@ -468,10 +468,9 @@
                         break;
                 }
             });
-            //
-            //if (window.screen.width < 768) {
-                elpy.load();
-            //}
+
+            // fix
+            elpy.load();
             //
 
             function spawnBackgroundObjects() {
@@ -1180,27 +1179,7 @@
             }
         }
 
-        // init();
-
-        // function init() {
-        //     if (window.screen.width <= 768) {
-        //         if (window.screen.width > window.screen.height) {
-        //             location.reload(true);
-
-        //             return;
-        //         }
-
-        //         loadMobileGame();
-        //     } else {
-        //         //loadGame();
-        //     }
-        // }
-
         loadMobileGame();
-
-        // window.addEventListener('orientationchange', () => {
-        //     location.reload(true);
-        // });
         
         function loadMobileGame() {
             const field = document.querySelector('#field');
