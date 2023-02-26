@@ -32,18 +32,24 @@
     <script>
         let fullScreenMode = false;
         const fullScreenButton = document.querySelector('.js-fullscreen');
+        
+        window.addEventListener('fullscreenchange', () => {
+            if (fullScreenMode) {
+                screen.orientation.lock("landscape-primary");
+            } else {
+                screen.orientation.unlock();
+            }       
+        });
 
         fullScreenButton.addEventListener('click', async () => {
             if (!fullScreenMode) {
-                await fullscreen();
-                await screen.orientation.lock("landscape-primary");
-
                 fullScreenMode = true;
+
+                fullscreen();
             } else {
-                await exitFullscreen();
-                await screen.orientation.unlock();
-                
                 fullScreenMode = false;
+
+                exitFullscreen();
             } 
         });
 

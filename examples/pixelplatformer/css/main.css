@@ -80,6 +80,7 @@
     display: none;
     position: fixed;
     bottom: 0;
+    left: 0;
     width: 100%;
     justify-content: space-between;
 }
@@ -184,6 +185,7 @@
             position: absolute;
             z-index: -1;
             bottom: 0;
+            left: 0;
         }
     }
 }
