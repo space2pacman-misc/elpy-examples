@@ -367,15 +367,6 @@
             const flag = createFlag();
             let isFlagLowered = false;
             let coinCounter = 0;
-            // stop frameRender elpy
-            const t = elpy.tick;
-
-            elpy.tick = (cb) => {
-                console.log(321);
-
-                t.call(elpy, cb);
-            }
-            //
 
             elpy.add(background);
 
@@ -696,8 +687,10 @@
             function characterOnFall() {
                 if (character.y - character.height > elpy.height) {
                     character.stop();
-
-                    //loadGame();
+                    elpy.destroy();
+                    elpy.nextTick(() => {
+                        loadGame();
+                    });
                 }
             }
 
