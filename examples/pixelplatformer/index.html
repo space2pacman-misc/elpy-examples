@@ -11,10 +11,12 @@
 <body>
     <div class="fullscreen js-fullscreen"></div>
     <div class="play js-play no-select">
-        <div class="play__game-title">
-            <div>Pixel<br>platformer</div>
+        <div class="play__container">
+            <div class="play__game-title">
+                <div>Pixel<br>platformer</div>
+            </div>
+            <div class="play__button js-play-button">Play</div>
         </div>
-        <div class="play__button js-play-button">Play</div>
     </div>
     <div class="controls js-controls">
         <div class="controls__arrows">
@@ -365,6 +367,15 @@
             const flag = createFlag();
             let isFlagLowered = false;
             let coinCounter = 0;
+            // stop frameRender elpy
+            const t = elpy.tick;
+
+            elpy.tick = (cb) => {
+                console.log(321);
+
+                t.call(elpy, cb);
+            }
+            //
 
             elpy.add(background);
 
@@ -393,6 +404,10 @@
             });
 
             elpy.tick(() => {
+                if (!character.isExist) {
+                    return false;
+                }
+
                 if (character.options.custom.slidingDelta > 0) {
                     character.options.custom.slidingDelta -= SLIDING_DELTA_STEP;
 
@@ -468,10 +483,6 @@
                         break;
                 }
             });
-
-            // fix
-            elpy.load();
-            //
 
             function spawnBackgroundObjects() {
                 for(let i = 0; i < map.objects.length; i++) {
@@ -685,8 +696,8 @@
             function characterOnFall() {
                 if (character.y - character.height > elpy.height) {
                     character.stop();
-                    
-                    loadGame();
+
+                    //loadGame();
                 }
             }
 
@@ -904,6 +915,10 @@
                     obstacle.options.custom.moving = true;
 
                     elpy.tick(() => {
+                        if (!character.isExist) {
+                            return false;
+                        }
+
                         if (!elpy.checkObjectInViewport(obstacle) || obstacle.ghost) {
                             obstacle.options.custom.moving = false;
 
@@ -1154,6 +1169,8 @@
                     });
                 });
             }
+
+            elpy.load();
 
             window._debug = function() {
                 window._elpy = elpy;
