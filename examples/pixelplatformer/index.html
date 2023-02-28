@@ -367,6 +367,7 @@
             const flag = createFlag();
             let isFlagLowered = false;
             let coinCounter = 0;
+            let fireballLastSpawnTime = 0;
 
             elpy.add(background);
 
@@ -1048,9 +1049,19 @@
             }
             
             function fireball() {
+                const currentDate = Date.now();
+
+                if (fireballLastSpawnTime + 100 < currentDate) {
+                    fireballLastSpawnTime = currentDate;
+                } else {
+                    return;
+                }
+
                 const width = 16;
                 const height = 16;
-                const fireball = elpy.create('fireball', character.x + (character.width / 2), (character.y + (character.height / 2)) - (height / 2), width, height, options.fireball);
+                const x = character.x + (character.width / 2);
+                const y = (character.y + (character.height / 2)) - (height / 2);
+                const fireball = elpy.create('fireball' + fireballLastSpawnTime, x, y, width, height, options.fireball);
 
                 fireball.collision(obstacles);
                 fireball.collision(grounds);
@@ -1060,7 +1071,6 @@
                 fireball.on('collision', (object) => {
                     elpy.nextTick(() => {
                         if (object.options.type === 'enemy') {
-                            //
                             fireball.stop();
                             
                             fireball.animate = true;
@@ -1074,7 +1084,6 @@
                             object.rotate(ENEMY_ROTATE);
 
                             delayedDestroy(object, DESTROY_TIME_DELAY);
-                            //
                         }
 
                         if (object.options.type === 'ground') {
