@@ -148,7 +148,8 @@
                     custom: {
                         slidingDelta: 0,
                         evolution: 0,
-                        isMoving: true
+                        isMoving: true,
+                        direction: null
                     }
                 },
                 enemy: {
@@ -267,7 +268,11 @@
                             state: 'destroy',
                             time: 100
                         }
-                    ]
+                    ],
+                    custom: {
+                        step: 5,
+                        direction: null
+                    }
                 },
                 bigGreenMountain: {
                     image: 'images/tiles/big-green-mountain.png'
@@ -438,6 +443,7 @@
                             }
 
                             character.options.custom.slidingDelta -= SLIDING_DELTA_STEP * 2;
+                            character.options.custom.direction = -1;
                         }
                         
                         break;
@@ -448,6 +454,7 @@
                             }
 
                             character.options.custom.slidingDelta += SLIDING_DELTA_STEP * 2;
+                            character.options.custom.direction = 1;
                         }
                         
                         break;
@@ -1061,7 +1068,9 @@
                 const height = 16;
                 const x = character.x + (character.width / 2);
                 const y = (character.y + (character.height / 2)) - (height / 2);
-                const fireball = elpy.create('fireball' + fireballLastSpawnTime, x, y, width, height, options.fireball);
+                const fireball = elpy.create('fireball' + fireballLastSpawnTime, x, y, width, height, JSON.parse(JSON.stringify(options.fireball)));
+
+                fireball.options.custom.direction = character.options.custom.direction;
 
                 fireball.collision(obstacles);
                 fireball.collision(grounds);
@@ -1108,7 +1117,7 @@
 
                     if (fireball.state === 'default') {
                         fireball.rotate(fireball.degrees + 5);
-                        fireball.move(fireball.x + 5, fireball.y);
+                        fireball.move(fireball.x + (fireball.options.custom.step * fireball.options.custom.direction), fireball.y);
                     }
                 });
             }
