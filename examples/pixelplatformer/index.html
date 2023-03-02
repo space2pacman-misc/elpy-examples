@@ -1068,7 +1068,7 @@
                 fireball.fall(0.5);
                 elpy.add(fireball);
 
-                fireball.on('collision', (object) => {
+                fireball.on('collision', (object, side) => {
                     elpy.nextTick(() => {
                         if (object.options.type === 'enemy') {
                             fireball.stop();
@@ -1089,12 +1089,14 @@
                         if (object.options.type === 'ground') {
                             fireball.jump(5, 0.5);
                         } else {
-                            fireball.stop();
+                            if (side === 'left' || side === 'right') {
+                                fireball.stop();
 
-                            fireball.animate = true;
-                            fireball.state = 'destroy';
+                                fireball.animate = true;
+                                fireball.state = 'destroy';
 
-                            delayedDestroy(fireball, 300);
+                                delayedDestroy(fireball, 300);
+                            }
                         }
                     });
                 });
