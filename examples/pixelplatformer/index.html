@@ -34,14 +34,6 @@
     <script>
         let fullScreenMode = false;
         const fullScreenButton = document.querySelector('.js-fullscreen');
-        
-        window.addEventListener('fullscreenchange', () => {
-            if (fullScreenMode) {
-                screen.orientation.lock("landscape-primary");
-            } else {
-                screen.orientation.unlock();
-            }       
-        });
 
         fullScreenButton.addEventListener('click', async () => {
             if (!fullScreenMode) {
@@ -57,9 +49,9 @@
 
         function fullscreen() {
             if(document.documentElement.requestFullscreen) {
-                document.body.requestFullscreen();
+                document.documentElement.requestFullscreen({ navigationUI: 'hide' });
             } else if(document.documentElement.webkitRequestFullScreen) {
-                document.body.webkitRequestFullScreen();
+                document.documentElement.webkitRequestFullScreen({ navigationUI: 'hide' });
             }
         }
 
@@ -1066,8 +1058,8 @@
 
                 const width = 16;
                 const height = 16;
-                const x = character.x + (character.width / 2);
-                const y = (character.y + (character.height / 2)) - (height / 2);
+                const x = character.x + (character.width / 2) - (width / 2);
+                const y = (character.y + (character.height / 2)) - (height / 4);
                 const fireball = elpy.create('fireball' + fireballLastSpawnTime, x, y, width, height, JSON.parse(JSON.stringify(options.fireball)));
 
                 fireball.options.custom.direction = character.options.custom.direction;
@@ -1093,19 +1085,25 @@
                             object.rotate(ENEMY_ROTATE);
 
                             delayedDestroy(object, DESTROY_TIME_DELAY);
+
+                            return;
                         }
 
-                        if (object.options.type === 'ground') {
+                        if (side === 'top') {
                             fireball.jump(5, 0.5);
-                        } else {
-                            if (side === 'left' || side === 'right') {
-                                fireball.stop();
 
-                                fireball.animate = true;
-                                fireball.state = 'destroy';
+                            return;
+                        }
 
-                                delayedDestroy(fireball, 300);
-                            }
+                        if (side === 'left' || side === 'right') {
+                            fireball.stop();
+
+                            fireball.animate = true;
+                            fireball.state = 'destroy';
+
+                            delayedDestroy(fireball, 300);
+
+                            return;
                         }
                     });
                 });
