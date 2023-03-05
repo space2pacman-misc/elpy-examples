@@ -710,7 +710,9 @@
                     if (object.state === 'mushroom') {
                         object.destroy();
                         
-                        characterGrowth(character.width * 2);
+                        if (character.options.custom.evolution === 0) {
+                            characterGrowth(character.width * 2);
+                        }
                     }
 
                     if (object.state === 'flower') {
@@ -772,7 +774,9 @@
                         if (object === character) {
                             bonus.destroy();
 
-                            characterGrowth(character.width * 2);
+                            if (character.options.custom.evolution === 0) {
+                                characterGrowth(character.width * 2);
+                            }
                         }
 
                         if (side === 'left') {
