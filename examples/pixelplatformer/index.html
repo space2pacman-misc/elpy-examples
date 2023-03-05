@@ -1095,8 +1095,8 @@
             }
 
             function mushroom(object) {
-                const MAX_DISTANCE = UNIT / 2;
                 let traveledDistance  = 0;
+                const MAX_DISTANCE = UNIT / 2;
                 const bonus = elpy.create(`bonus-${object.name}`, object.x + ((UNIT / 2) / 2), object.y, UNIT / 2, UNIT / 2, JSON.parse(JSON.stringify(options.bonus)));
 
                 object.options.custom.hasCoin = false;
@@ -1157,9 +1157,11 @@
             }
 
             function flower(object) {
-                const MAX_DISTANCE = UNIT / 2;
                 let traveledDistance  = 0;
-                const bonus = elpy.create(`bonus-${object.name}`, object.x + ((UNIT / 2) / 2), object.y - (UNIT / 2), UNIT / 2, UNIT, JSON.parse(JSON.stringify(options.bonus)));
+                const width = 18;
+                const height = 36;
+                const MAX_DISTANCE = UNIT / 2;
+                const bonus = elpy.create(`bonus-${object.name}`, object.x + 3, object.y - UNIT, width, height, JSON.parse(JSON.stringify(options.bonus)));
 
                 object.options.custom.hasCoin = false;
                 
