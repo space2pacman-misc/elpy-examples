@@ -725,9 +725,7 @@
                 if (checkBonusInBox(object, side)) {
                     if (character.options.custom.evolution === 0) {
                         mushroom(object);
-                    }
-
-                    if (character.options.custom.evolution === 1) {
+                    } else {
                         flower(object);
                     }
                 }
