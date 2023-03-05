@@ -355,7 +355,7 @@
             const SLIDING_DELTA_MAX_VALUE = 5;
             const SLIDING_DELTA_DEFAULT_VALUE = 1;
             const SLIDING_DELTA_STEP = 0.1;
-            const TREASURE_WITH_BONUS = ['treasure-9-21'];
+            const TREASURE_WITH_BONUS = ['treasure-9-21', 'treasure-9-23'];
             const grounds = [];
             const obstacles = [];
             const MAX_MAP_LENGTH = (map.objects[0].length - 1) * UNIT;
@@ -722,104 +722,15 @@
                     }
                 }
 
-                //
-                if ((object.name === 'treasure-9-21' || object.name === 'treasure-9-23')&& side === 'bottom' && object.state === 'full') {
+                if (checkBonusInBox(object, side)) {
                     if (character.options.custom.evolution === 0) {
-                        mushroom();
+                        mushroom(object);
                     }
 
                     if (character.options.custom.evolution === 1) {
-                        flower();
+                        flower(object);
                     }
                 }
-
-                function mushroom() {
-                    const MAX_DISTANCE = UNIT / 2;
-                    let traveledDistance  = 0;
-                    const bonus = elpy.create(`bonus-${object.name}`, object.x + ((UNIT / 2) / 2), object.y, UNIT / 2, UNIT / 2, JSON.parse(JSON.stringify(options.bonus)));
-
-                    object.options.custom.hasCoin = false;
-
-                    checkTreasureCollision(object);
-                    
-                    bonus.collision(character);
-                    bonus.collision(obstacles);
-                    bonus.collision(grounds);
-                    obstacles.forEach(obstacle => {
-                        if (obstacle !== object) {
-                            obstacle.collision(bonus);
-                        }
-                    });
-                    obstacles.push(bonus);
-                    character.collision(bonus);
-                    elpy.add(bonus);
-                    
-                    elpy.tick(() => {
-                        if (traveledDistance >= MAX_DISTANCE) {
-                            bonus.fall(FALL_MULTIPLIER);
-
-                            bonus.options.custom.spawned = true;
-
-                            moveObstacle(bonus);
-
-                            return false;
-                        }
-
-                        traveledDistance++;
-                        
-                        bonus.y -= 1;
-                    });
-                    
-                    bonus.on('collision', (object, side) => {
-                        if (object === character) {
-                            bonus.destroy();
-
-                            if (character.options.custom.evolution === 0) {
-                                characterGrowth(character.width * 2);
-                            }
-                        }
-
-                        if (side === 'left') {
-                            bonus.options.custom.delta = -1;
-                        }
-
-                        if (side === 'right') {
-                            bonus.options.custom.delta = 1;
-                        }
-                    });
-
-                    bonus.on('move', () => {
-                        if (bonus.y >= elpy.height) {
-                            bonus.destroy();
-                        }
-                    });
-                }
-
-                function flower() {
-                    const MAX_DISTANCE = UNIT / 2;
-                    let traveledDistance  = 0;
-                    const bonus = elpy.create(`bonus-${object.name}`, object.x + ((UNIT / 2) / 2), object.y, UNIT / 2, UNIT / 2, JSON.parse(JSON.stringify(options.bonus)));
-
-                    object.options.custom.hasCoin = false;
-                    
-                    bonus.state = 'flower';
-                    
-                    character.collision(bonus);
-                    elpy.add(bonus);
-
-                    elpy.tick(() => {
-                        if (traveledDistance >= MAX_DISTANCE) {
-                            bonus.options.custom.spawned = true;
-
-                            return false;
-                        }
-
-                        traveledDistance++;
-                        
-                        bonus.y -= 1;
-                    });
-                }
-                //
 
                 if (object.options.type === 'treasure' && side === 'bottom' && object.state === 'full') {
                     checkTreasureCollision(object);
@@ -1183,6 +1094,97 @@
                         character.move(character.x + 1, character.y);
                     });
                 });
+            }
+
+            function mushroom(object) {
+                const MAX_DISTANCE = UNIT / 2;
+                let traveledDistance  = 0;
+                const bonus = elpy.create(`bonus-${object.name}`, object.x + ((UNIT / 2) / 2), object.y, UNIT / 2, UNIT / 2, JSON.parse(JSON.stringify(options.bonus)));
+
+                object.options.custom.hasCoin = false;
+
+                checkTreasureCollision(object);
+                
+                bonus.collision(character);
+                bonus.collision(obstacles);
+                bonus.collision(grounds);
+                obstacles.forEach(obstacle => {
+                    if (obstacle !== object) {
+                        obstacle.collision(bonus);
+                    }
+                });
+                obstacles.push(bonus);
+                character.collision(bonus);
+                elpy.add(bonus);
+                
+                elpy.tick(() => {
+                    if (traveledDistance >= MAX_DISTANCE) {
+                        bonus.fall(FALL_MULTIPLIER);
+
+                        bonus.options.custom.spawned = true;
+
+                        moveObstacle(bonus);
+
+                        return false;
+                    }
+
+                    traveledDistance++;
+                    
+                    bonus.y -= 1;
+                });
+                
+                bonus.on('collision', (object, side) => {
+                    if (object === character) {
+                        bonus.destroy();
+
+                        if (character.options.custom.evolution === 0) {
+                            characterGrowth(character.width * 2);
+                        }
+                    }
+
+                    if (side === 'left') {
+                        bonus.options.custom.delta = -1;
+                    }
+
+                    if (side === 'right') {
+                        bonus.options.custom.delta = 1;
+                    }
+                });
+
+                bonus.on('move', () => {
+                    if (bonus.y >= elpy.height) {
+                        bonus.destroy();
+                    }
+                });
+            }
+
+            function flower(object) {
+                const MAX_DISTANCE = UNIT / 2;
+                let traveledDistance  = 0;
+                const bonus = elpy.create(`bonus-${object.name}`, object.x + ((UNIT / 2) / 2), object.y, UNIT / 2, UNIT / 2, JSON.parse(JSON.stringify(options.bonus)));
+
+                object.options.custom.hasCoin = false;
+                
+                bonus.state = 'flower';
+                
+                character.collision(bonus);
+                elpy.add(bonus);
+
+                elpy.tick(() => {
+                    if (traveledDistance >= MAX_DISTANCE) {
+                        bonus.options.custom.spawned = true;
+
+                        return false;
+                    }
+
+                    traveledDistance++;
+                    
+                    bonus.y -= 1;
+                });
+            }
+
+            function checkBonusInBox(object, side) {
+                return TREASURE_WITH_BONUS.includes(object.name) && side === 'bottom' && object.state === 'full';
             }
 
             elpy.load();
