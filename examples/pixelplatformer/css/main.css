@@ -5,13 +5,14 @@ body {
 #field {
     margin: auto;
     border: 1px solid #dcdcdc;
+    display: none;
 }
 
 .play {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #e6f6f5;
+    background-image: url('../images/background/main.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50%;
