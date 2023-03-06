@@ -1381,6 +1381,14 @@
                 document.dispatchEvent(new KeyboardEvent('keydown',{'code':'ArrowUp'}));
             });
 
+            controlsArrowUp.addEventListener('touchend', () => {
+                document.dispatchEvent(new KeyboardEvent('keyup',{'code':'ArrowUp'}));
+            });
+
+            controlsArrowDown.addEventListener('touchstart', () => {
+                document.dispatchEvent(new KeyboardEvent('keydown',{'code':'ArrowDown'}));
+            });
+
             controlsArrowDown.addEventListener('touchend', () => {
                 document.dispatchEvent(new KeyboardEvent('keyup',{'code':'ArrowDown'}));
             });
