@@ -118,12 +118,27 @@ body {
     background-size: cover;
 }
 
+.controls__arrow-center {
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .controls-arrow--left {
     background-image: url('./../images/controls/arrow-left.png');
 }
 
 .controls-arrow--right {
     background-image: url('./../images/controls/arrow-right.png');
+}
+
+.controls-arrow--up {
+    background-image: url('./../images/controls/arrow-up.png');
+}
+
+.controls-arrow--down {
+    background-image: url('./../images/controls/arrow-down.png');
 }
 
 .controls__buttons {
@@ -163,6 +178,18 @@ body {
     right: 10px;
 }
 
+@media (max-width: 360px) {
+    .controls__arrow-center {
+        height: 230px;
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+
+    .controls__buttons {
+        height: 230px;
+    }
+}
+
 @media (max-width: 768px) {
     body {
         overflow: hidden;
@@ -177,11 +204,15 @@ body {
         display: flex;
     }
 
+    .controls__arrows {
+        margin-left: 10px;
+    }
+
+    .controls__buttons {
+        margin-right: 10px;
+    }
+
     @media (orientation: portrait) {
-        .controls__arrows {
-            align-items: end;
-        }
-    
         .controls__buttons {
             flex-direction: column;
             align-items: end;
