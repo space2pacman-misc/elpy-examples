@@ -21,6 +21,13 @@
     <div class="controls js-controls">
         <div class="controls__arrows">
             <div class="controls__arrow controls-arrow--left js-controls-arrow-left"></div>
+            <div style="    height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;">
+                <div class="controls__arrow controls-arrow--left js-controls-arrow-up"></div>
+                <div class="controls__arrow controls-arrow--right js-controls-arrow-down"></div>
+            </div>
             <div class="controls__arrow controls-arrow--right js-controls-arrow-right"></div>
         </div>
         <div class="controls__buttons">
@@ -1347,6 +1354,8 @@
             const controls = document.querySelector('.js-controls');
             const controlsArrowLeft = document.querySelector('.js-controls-arrow-left');
             const controlsArrowRight = document.querySelector('.js-controls-arrow-right');
+            const controlsArrowUp = document.querySelector('.js-controls-arrow-up');
+            const controlsArrowDown = document.querySelector('.js-controls-arrow-down');
             const controlsButtonFire = document.querySelector('.js-controls-button-fire');
             const controlsButtonJump = document.querySelector('.js-controls-button-jump');
             const play = document.querySelector('.js-play');
@@ -1366,6 +1375,14 @@
 
             controlsArrowRight.addEventListener('touchend', () => {
                 document.dispatchEvent(new KeyboardEvent('keyup',{'code':'ArrowRight'}));
+            });
+
+            controlsArrowUp.addEventListener('touchstart', () => {
+                document.dispatchEvent(new KeyboardEvent('keydown',{'code':'ArrowUp'}));
+            });
+
+            controlsArrowDown.addEventListener('touchend', () => {
+                document.dispatchEvent(new KeyboardEvent('keyup',{'code':'ArrowDown'}));
             });
 
             controlsButtonFire.addEventListener('touchstart', () => {
