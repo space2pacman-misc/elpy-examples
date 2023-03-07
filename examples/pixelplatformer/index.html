@@ -396,7 +396,6 @@
             const MAX_MAP_LENGTH = (map.objects[0].length - 1) * UNIT;
             const elpy = new Elpy('#field', window.outerWidth, UNIT * 15, options.engine);
             const mainBackground = elpy.create('main-background', -10000, 0, 20000, 360, options.mainBackground);
-            //
             const basementBackground= elpy.create('basement-background', -10000, 1360, 20000, 360, options.basementBackground);
             const flag = createFlag();
             let isFlagLowered = false;
@@ -1039,12 +1038,17 @@
             }
 
             function loadHiddenObjectTextures() {
-                // star, mushroom
                 const coin = elpy.create('coin', 0, 0, 0, 0, options.coin);
-
+                const bonus = elpy.create('bonus', 0, 0, 0, 0, options.bonus);
+                const fireball = elpy.create('fireball', 0, 0, 0, 0, options.fireball);
+                
                 elpy.add(coin);
+                elpy.add(bonus);
+                elpy.add(fireball);
                 elpy.on('load', () => {
                     coin.destroy();
+                    bonus.destroy();
+                    fireball.destroy();
                 });
             }
 
