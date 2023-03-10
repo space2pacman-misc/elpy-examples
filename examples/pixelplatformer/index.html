@@ -394,7 +394,7 @@
             const grounds = [];
             const obstacles = [];
             const MAX_MAP_LENGTH = (map.objects[0].length - 1) * UNIT;
-            const elpy = new Elpy('#field', window.outerWidth, UNIT * 15, options.engine);
+            const elpy = new Elpy('#field', window.outerWidth % 2 === 0 ? window.outerWidth : window.outerWidth - 1, UNIT * 15, options.engine);
             const mainBackground = elpy.create('main-background', -10000, 0, 20000, 360, options.mainBackground);
             const basementBackground= elpy.create('basement-background', -10000, 1360, 20000, 360, options.basementBackground);
             const flag = createFlag();
