@@ -1342,7 +1342,7 @@
             }
 
             function getWindowWidth() {
-                return window.outerWidth % 2 === 0 ? window.outerWidth : window.outerWidth - 1;
+                return window.outerWidth % 2 === 0 ? window.outerWidth : window.outerWidth + 1;
             }
 
             elpy.load();
