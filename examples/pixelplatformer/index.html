@@ -415,7 +415,7 @@
             const MAX_MAP_LENGTH = (map.objects[0].length - 1) * UNIT;
             const elpy = new Elpy('#field', isMobile() ? getWindowWidth() : 700, UNIT * 15, options.engine);
             const mainBackground = elpy.create('main-background', -10000, 0, 20000, 360, options.mainBackground);
-            const basementBackground= elpy.create('basement-background', -10000, 1360, 20000, 360, options.basementBackground);
+            const basementBackground = elpy.create('basement-background', -10000, 1360, 20000, 360, options.basementBackground);
             const flag = createFlag();
             let isFlagLowered = false;
             let coinCounter = 0;
@@ -648,6 +648,7 @@
 
                     if (object.options.type === 'bonus' && object.state === 'mushroom' && object.options.custom.spawned) {
                         object.options.custom.delta = -object.options.custom.delta;
+                        
                         object.jump(MUSHROOM_JUMP_HEIGHT, MUSHROOM_JUMP_MULTIPLIER);
                         treasure.jump(TREASURE_JUMP_HEIGHT, TREASURE_JUMP_MULTIPLIER, true);
                     }
@@ -1081,7 +1082,6 @@
                 elpy.add(flagpoleTip);
                 elpy.add(flagpole);
                 elpy.add(flag);
-
                 obstacles.push(flagpole);
 
                 return flag;
@@ -1226,7 +1226,6 @@
                 return new Promise(resolve => {
                     character.fall();
                     character.jump(10, 0.1, true);
-
                     elpy.tick(() => {
                         if (character.x >= 4898) {
                             resolve();
