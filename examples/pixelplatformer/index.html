@@ -418,6 +418,7 @@
             const basementBackground = elpy.create('basement-background', -10000, 1360, 20000, 360, options.basementBackground);
             const flag = createFlag();
             let isFlagLowered = false;
+            let characterIsMove = false;
             let coinCounter = 0;
             let fireballLastSpawnTime = 0;
 
@@ -447,6 +448,10 @@
                 character.on('move', characterOnMove);
                 character.on('fall', characterOnFall);
                 character.on('collision', characterOnCollision);
+
+                elpy.nextTick(() => {
+                    characterIsMove = true;
+                });
             });
 
             elpy.tick(() => {
@@ -474,6 +479,10 @@
             });
 
             elpy.key(key => {
+                if (!characterIsMove) {
+                    return;
+                }
+
                 if (!character.options.custom.isMoving) {
                     character.options.custom.slidingDelta = 0;
 
