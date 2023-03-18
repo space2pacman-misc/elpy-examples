@@ -820,9 +820,8 @@
                 if (character.y - character.height > elpy.height) {
                     character.stop();
                     elpy.destroy();
-                    elpy.nextTick(() => {
-                        loadGame();
-                    });
+                    
+                    loadMainScreen();
                 }
             }
 
@@ -1193,6 +1192,10 @@
                 await moveCharacterDown();
                 await moveCharacterRight();
                 await moveCharacterToCastle();
+
+                elpy.destroy();
+
+                loadMainScreen();
             }
 
             function removeCollisionWithCharacter() {
@@ -1439,6 +1442,13 @@
             
             return check;
         };
+
+        function loadMainScreen() {
+            fullScreenButton.style.display = 'block';
+            play.style.display = 'flex';
+            field.style.display = 'none';
+            controls.style.display = 'none';
+        }
     </script>
 </body>
 </html>
