@@ -165,7 +165,7 @@
                         evolution: 0,
                         isMoving: true,
                         direction: null,
-                        down: false
+                        arrowDownIsPressed: false
                     }
                 },
                 enemy: {
@@ -206,7 +206,8 @@
                     type: 'box'
                 },
                 boxInversion: {
-                    image: 'images/tiles/box-inversion.png'
+                    image: 'images/tiles/box-inversion.png',
+                    type: 'box-inversion'
                 },
                 pipeHole: {
                     image: 'images/tiles/pipeHole.png',
@@ -240,7 +241,7 @@
                             state: 'rotate',
                             time: 100
                         }
-                    ],
+                    ]
                 },
                 flagpoleTip: {
                     image: 'images/tiles/flagpoleTip.png'
@@ -528,7 +529,7 @@
 
                         break;
                     case 'ArrowDown':
-                        character.options.custom.down = true;
+                        character.options.custom.arrowDownIsPressed = true;
 
                         break;
                 }
@@ -543,7 +544,7 @@
 
                         break;
                     case 'ArrowDown':
-                        character.options.custom.down = false;
+                        character.options.custom.arrowDownIsPressed = false;
 
                         break;
                 }
@@ -828,7 +829,7 @@
             function characterOnCollision(object, side) {
                 character.state = `${character.options.custom.evolution}:idle`;
 
-                if (['enemy', 'treasure', 'box', 'pipe', 'pipe-hole'].includes(object.options.type)
+                if (['enemy', 'treasure', 'box', 'pipe', 'pipe-hole', 'box-inversion'].includes(object.options.type)
                     && (side === 'left' || side === 'right')) {
                     character.options.custom.slidingDelta = 0;
                 }
@@ -878,7 +879,7 @@
                     }
                 }
 
-                if (object.name === PIPE_TO_BASEMENT && side === 'top' && character.options.custom.down) {
+                if (object.name === PIPE_TO_BASEMENT && side === 'top' && character.options.custom.arrowDownIsPressed) {
                     goToBasement();
                 }
                 //
@@ -1137,6 +1138,10 @@
 
                 fireball.on('collision', (object, side) => {
                     elpy.nextTick(() => {
+                        if (object.options.type === 'coin') {
+                            return;
+                        }
+
                         if (object.options.type === 'enemy') {
                             fireball.stop();
                             
