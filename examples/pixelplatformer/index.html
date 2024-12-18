@@ -187,7 +187,7 @@
                 },
                 mainBackground: {
                     image: {
-                        src: 'images/background/background_0000.png',
+                        path: 'images/background/background_0000.png',
                         repeat: true
                     }
                 },
@@ -196,7 +196,7 @@
                 },
                 ground: {
                     image: {
-                        src: 'images/tiles/ground.png',
+                        path: 'images/tiles/ground.png',
                         repeat: true
                     },
                     type: 'ground'
@@ -249,7 +249,7 @@
                 flagpole: {
                     obstacle: false,
                     image: {
-                        src: 'images/tiles/flagpole.png',
+                        path: 'images/tiles/flagpole.png',
                         repeat: true
                     }
                 },
@@ -771,7 +771,7 @@
                     }
                 }
                 // 1672
-                const ground = elpy.create('ground-inversion', 0, 1672, UNIT * 17, UNIT * 2, { image: { src: 'images/tiles/ground-inversion.png', repeat: true } });
+                const ground = elpy.create('ground-inversion', 0, 1672, UNIT * 17, UNIT * 2, { image: { path: 'images/tiles/ground-inversion.png', repeat: true } });
 
                 elpy.add(ground);
                 obstacles.push(ground);
